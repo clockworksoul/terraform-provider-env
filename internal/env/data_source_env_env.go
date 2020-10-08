@@ -6,9 +6,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceEnvEnv() *schema.Resource {
+func dataSourceEnvValue() *schema.Resource {
 	return &schema.Resource{
-		Read: resourceEnvEnvRead,
+		Read: dataSourceEnvValueRead,
 
 		Schema: map[string]*schema.Schema{
 			"key": {
@@ -26,7 +26,7 @@ func resourceEnvEnv() *schema.Resource {
 	}
 }
 
-func resourceEnvEnvRead(d *schema.ResourceData, meta interface{}) error {
+func dataSourceEnvValueRead(d *schema.ResourceData, meta interface{}) error {
 	key := d.Get("key").(string)
 	value, exists := os.LookupEnv(key)
 

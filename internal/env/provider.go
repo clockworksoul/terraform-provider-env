@@ -9,7 +9,7 @@ import (
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		DataSourcesMap: map[string]*schema.Resource{
-			"env_env": resourceEnvEnv(),
+			"env_value": dataSourceEnvValue(),
 		},
 	}
 }
