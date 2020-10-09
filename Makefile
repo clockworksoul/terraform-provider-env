@@ -1,5 +1,10 @@
 .DEFAULT_GOAL := help
 
+NAME := env
+VERSION := 0.0.2
+OS := darwin
+ARCH := amd64
+
 help:
 	@echo "Usage:"
 	@echo "  make [command]"
@@ -13,17 +18,17 @@ help:
 
 clean:
 	@echo "* Deleting local binary (if present)"
-	@rm -fv ./terraform-provider-env
+	@rm -fv ./terraform-provider-${NAME}*
 
 build: clean
 	@echo "* Building provider binary"
-	@go build -o terraform-provider-env .
-	@chmod 755 terraform-provider-env
-
-install: build
-	@echo "* Installing terraform-provider-env into /usr/local/bin/"
-	@sudo mv terraform-provider-env /usr/local/bin/
-	@which terraform-provider-env
+	@go build -o ./terraform-provider-${NAME}_v${VERSION} .
+	@chmod 755 ./terraform-provider-${NAME}_*
 
 test:
 	@go test -v ./...
+
+release: build
+	@zip terraform-provider-${NAME}_${VERSION}_${OS}_${ARCH}.zip terraform-provider-${NAME}_v${VERSION}
+	@shasum -a 256 *.zip > terraform-provider-${NAME}_${VERSION}_SHA256SUMS
+	@gpg --detach-sign terraform-provider-${NAME}_${VERSION}_SHA256SUMS
