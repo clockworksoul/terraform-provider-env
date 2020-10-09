@@ -1,2 +1,3 @@
 .terraform
 terraform-provider-env
+.goreleaser.yml

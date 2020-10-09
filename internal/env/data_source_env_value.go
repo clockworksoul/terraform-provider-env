@@ -17,10 +17,12 @@ func dataSourceEnvValue() *schema.Resource {
 			},
 
 			"exists": {
-				Type: schema.TypeBool,
+				Type:     schema.TypeBool,
+				Computed: true,
 			},
 			"value": {
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 		},
 	}
@@ -31,9 +33,8 @@ func dataSourceEnvValueRead(d *schema.ResourceData, meta interface{}) error {
 	value, exists := os.LookupEnv(key)
 
 	d.SetId(key)
+	d.Set("value", value)
+	d.Set("exists", exists)
 
-	return d.Set("metadata", []map[string]interface{}{{
-		"exists": exists,
-		"value":  value,
-	}})
+	return nil
 }
