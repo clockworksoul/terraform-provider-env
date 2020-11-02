@@ -26,7 +26,7 @@ resource "aws_instance" "web" {
 
   tags = {
     Name = "HelloWorld"
-    env  = data.dev_value.environment
+    env  = data.env_value.environment.value
   }
 }
 ```
